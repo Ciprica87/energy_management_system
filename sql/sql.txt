@@ -1,0 +1,10 @@
+CREATE DATABASE user_db;
+CREATE DATABASE device_db;
+
+CREATE USER 'user'@'localhost' IDENTIFIED BY 'user';
+CREATE USER 'device'@'localhost' IDENTIFIED BY 'device';
+
+GRANT ALL PRIVILEGES ON user_db.* TO 'user'@'localhost';
+GRANT ALL PRIVILEGES ON device_db.* TO 'device'@'localhost';
+
+GRANT ALL PRIVILEGES ON database1.* TO 'user1'@'localhost';
