@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  monitor_db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'monitor_db'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - "3309:3306"
+    volumes:
+      - my_db:/var/lib/mysql
+    networks:
+      demo_net:
+        ipv4_address: 172.30.2.3
+  monitor_microservice:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "8083:8082"
+    environment:
+      - DB_IP=monitor_db
+      - DB_PORT=3306
+      - DB_DBNAME=monitor_db
+      - DB_USER=root
+      - DB_PASSWORD=password
+    networks:
+      demo_net:
+        ipv4_address: 172.30.2.2
+
+volumes:
+  my_db:
+
+networks:
+  demo_net:
+    external: true
